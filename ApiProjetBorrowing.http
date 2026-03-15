@@ -1,0 +1,6 @@
+@ApiProjetBorrowing_HostAddress = http://localhost:5045
+
+GET {{ApiProjetBorrowing_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
