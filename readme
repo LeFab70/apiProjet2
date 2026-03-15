@@ -1,0 +1,280 @@
+# 📚 Library Borrowing API
+
+## 👨‍💻 Équipe
+
+Projet réalisé par :
+
+* **Kaylen**
+* **Perez**
+* **Fabrice**
+
+---
+
+# 📖 Description du projet
+
+Library Borrowing API est une **API REST développée avec ASP.NET Core Web API** permettant la gestion des emprunts de livres dans une bibliothèque.
+
+Un utilisateur peut créer un compte et emprunter un ou plusieurs livres à l’aide d’un **code d’emprunt unique**.
+Chaque emprunt possède une **date d’emprunt**, et chaque livre possède une **date de retour** lorsqu’il est remis.
+
+Un livre peut être emprunté **plusieurs fois**, et un emprunt peut contenir **plusieurs livres**.
+
+L’API inclut :
+
+* une **documentation Swagger interactive**
+* une **authentification sécurisée avec JWT**
+* une **connexion à une base de données avec Entity Framework Core**
+
+---
+
+# 🛠 Technologies utilisées
+
+* **ASP.NET Core Web API**
+* **Entity Framework Core**
+* **JWT Authentication**
+* **Swagger / OpenAPI**
+* **SQL Database**
+* **Data Annotations Validation**
+* **Pagination et filtrage via Query Parameters**
+
+---
+
+# 🚀 Lancer le projet localement
+
+### 1️⃣ Cloner le projet
+
+```bash
+git clone https://github.com/LeFab70/apiProjet2.git
+cd apiProjet2
+```
+
+### 2️⃣ Restaurer les dépendances
+
+```bash
+dotnet restore
+```
+
+### 3️⃣ Appliquer les migrations de base de données
+
+```bash
+dotnet ef database update
+```
+
+### 4️⃣ Lancer l’API
+
+```bash
+dotnet run
+```
+
+### 5️⃣ Accéder à Swagger
+
+Ouvrir dans le navigateur :
+
+```
+http://localhost:5250/swagger/index.html
+```
+
+ou
+
+```
+http://localhost:5000/swagger
+```
+
+Swagger permet de **tester tous les endpoints directement depuis l’interface web**.
+
+---
+
+# 🔐 Authentification JWT
+
+Certains endpoints sont protégés et nécessitent un **token JWT**.
+
+### Endpoint de connexion
+
+```
+POST /api/auth/login
+```
+
+### Identifiants de test
+
+```
+Email : admin@test.com
+Password : Password123!
+```
+
+Après la connexion, un **token JWT est retourné**.
+
+Dans Swagger :
+
+1. Cliquer sur **Authorize**
+2. Coller le token
+3. Tester les endpoints protégés
+
+---
+
+# 📦 Fonctionnalités implémentées
+
+✔ CRUD complet pour toutes les entités
+✔ Gestion des utilisateurs
+✔ Gestion des livres
+✔ Gestion des emprunts
+✔ Un emprunt peut contenir plusieurs livres
+✔ Un livre peut être emprunté plusieurs fois
+✔ Authentification JWT
+✔ Endpoints protégés (POST / PUT / DELETE)
+✔ Documentation Swagger complète
+✔ Pagination des résultats
+✔ Filtrage et recherche via query parameters
+✔ Gestion des erreurs HTTP (400, 401, 404, 409, 500)
+
+---
+
+# 🗂 Structure du projet
+
+```
+Controllers/
+    AuthController.cs
+    UsersController.cs
+    BooksController.cs
+    BorrowingsController.cs
+
+Models/
+    User.cs
+    Book.cs
+    Borrowing.cs
+
+DTOs/
+    CreateBorrowingDto.cs
+    UpdateBorrowingDto.cs
+    BorrowingResponseDto.cs
+
+Data/
+    AppDbContext.cs
+
+Services/
+    AuthService.cs
+    BorrowingService.cs
+
+Program.cs
+```
+
+---
+
+# 🧩 Relations des données
+
+## 🗄 Diagramme de la base de données (ERD)
+
+```mermaid
+erDiagram
+
+USER ||--o{ BORROWING : makes
+BORROWING ||--o{ BORROWINGBOOK : contains
+BOOK ||--o{ BORROWINGBOOK : included_in
+
+USER {
+    int Id
+    string FirstName
+    string LastName
+    string Email
+    string Password
+}
+
+BOOK {
+    int Id
+    string Title
+    string Author
+    string ISBN
+    int Quantity
+}
+
+BORROWING {
+    int Id
+    string BorrowCode
+    datetime BorrowDate
+    int UserId
+}
+
+BORROWINGBOOK {
+    int Id
+    int BorrowingId
+    int BookId
+    datetime ReturnDate
+}
+```
+
+### Explication des relations
+
+* **User → Borrowing**
+
+  * Un utilisateur peut effectuer plusieurs emprunts.
+
+* **Borrowing → BorrowingBook**
+
+  * Un emprunt peut contenir plusieurs livres.
+
+* **Book → BorrowingBook**
+
+  * Un livre peut être emprunté plusieurs fois.
+
+* **BorrowingBook**
+
+  * Table intermédiaire qui permet de gérer la relation **many-to-many** entre Borrowing et Book.
+  * Elle contient également la **date de retour de chaque livre**.
+
+```
+User
+ │
+ │ 1
+ │
+ └─────< Borrowing >─────< BorrowingBooks >───── Book
+            │
+            │
+       BorrowCode
+       BorrowDate
+```
+
+* Un **User** peut faire plusieurs **Borrowings**
+* Un **Borrowing** peut contenir plusieurs **Books**
+* Un **Book** peut apparaître dans plusieurs **Borrowings**
+
+---
+
+# ⚠️ Fonctionnalités non complétées
+
+* Interface utilisateur (frontend)
+* Gestion avancée des rôles
+* Dashboard statistique des emprunts
+
+---
+
+# 📄 Bonnes pratiques appliquées
+
+✔ Utilisation de **DTOs pour les requêtes et réponses**
+✔ Les entités EF Core ne sont jamais exposées directement
+✔ Retour de **ActionResult<T> pour contrôler les codes HTTP**
+✔ Utilisation de **CreatedAtAction() pour les ressources créées**
+✔ Swagger configuré avec bouton **Authorize pour JWT**
+
+---
+
+# 🎓 Contexte académique
+
+Ce projet a été réalisé dans le cadre d’un exercice visant à :
+
+* concevoir une **API REST complète**
+* documenter une API avec **Swagger**
+* sécuriser les endpoints avec **JWT**
+* connecter une application à une **base de données via Entity Framework Core**
+* appliquer les **bonnes pratiques de développement API**
+
+---
+
+# 🔗 Dépôt GitHub
+
+Repository :
+
+```
+https://github.com/LeFab70/apiProjet2
+```
+Dans le cadre d’un projet académique.
+Certaines parties du développement ont été **assistées par l’intelligence artificielle (GitHub Copilot)**.
+---
