@@ -38,3 +38,16 @@
 /Users/fabricekouonang/Documents/apiDotnet/ApiProjetBorrowing/obj/Debug/net10.0/ApiProjetBorrowing.pdb
 /Users/fabricekouonang/Documents/apiDotnet/ApiProjetBorrowing/obj/Debug/net10.0/ApiProjetBorrowing.genruntimeconfig.cache
 /Users/fabricekouonang/Documents/apiDotnet/ApiProjetBorrowing/obj/Debug/net10.0/ref/ApiProjetBorrowing.dll
+/Users/fabricekouonang/Documents/apiDotnet/ApiProjetBorrowing/bin/Debug/net10.0/Namotion.Reflection.dll
+/Users/fabricekouonang/Documents/apiDotnet/ApiProjetBorrowing/bin/Debug/net10.0/Newtonsoft.Json.dll
+/Users/fabricekouonang/Documents/apiDotnet/ApiProjetBorrowing/bin/Debug/net10.0/NJsonSchema.dll
+/Users/fabricekouonang/Documents/apiDotnet/ApiProjetBorrowing/bin/Debug/net10.0/NJsonSchema.Annotations.dll
+/Users/fabricekouonang/Documents/apiDotnet/ApiProjetBorrowing/bin/Debug/net10.0/NJsonSchema.NewtonsoftJson.dll
+/Users/fabricekouonang/Documents/apiDotnet/ApiProjetBorrowing/bin/Debug/net10.0/NJsonSchema.Yaml.dll
+/Users/fabricekouonang/Documents/apiDotnet/ApiProjetBorrowing/bin/Debug/net10.0/NSwag.Annotations.dll
+/Users/fabricekouonang/Documents/apiDotnet/ApiProjetBorrowing/bin/Debug/net10.0/NSwag.AspNetCore.dll
+/Users/fabricekouonang/Documents/apiDotnet/ApiProjetBorrowing/bin/Debug/net10.0/NSwag.Core.dll
+/Users/fabricekouonang/Documents/apiDotnet/ApiProjetBorrowing/bin/Debug/net10.0/NSwag.Core.Yaml.dll
+/Users/fabricekouonang/Documents/apiDotnet/ApiProjetBorrowing/bin/Debug/net10.0/NSwag.Generation.dll
+/Users/fabricekouonang/Documents/apiDotnet/ApiProjetBorrowing/bin/Debug/net10.0/NSwag.Generation.AspNetCore.dll
+/Users/fabricekouonang/Documents/apiDotnet/ApiProjetBorrowing/bin/Debug/net10.0/YamlDotNet.dll

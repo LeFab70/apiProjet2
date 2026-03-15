@@ -71,13 +71,13 @@ dotnet run
 Ouvrir dans le navigateur :
 
 ```
-http://localhost:5250/swagger/index.html
+https://localhost:5250/swagger/index.html
 ```
 
 ou
 
 ```
-http://localhost:5000/swagger
+https://localhost:5000/swagger
 ```
 
 Swagger permet de **tester tous les endpoints directement depuis l’interface web**.
