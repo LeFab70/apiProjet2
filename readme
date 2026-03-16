@@ -4,7 +4,7 @@
 
 Projet réalisé par :
 
-* **Kaylen**
+* **Kayleb**
 * **Perez**
 * **Fabrice**
 
@@ -278,3 +278,77 @@ https://github.com/LeFab70/apiProjet2
 Dans le cadre d’un projet académique.
 Certaines parties du développement ont été **assistées par l’intelligence artificielle (GitHub Copilot)**.
 ---
+# 👨‍💻 Répartition des tâches
+
+Le projet a été réalisé en équipe de trois développeurs. Chaque membre était responsable d’une partie spécifique de l’API afin de répartir efficacement le travail.
+
+## Fabrice
+
+Responsable de l’authentification et de la gestion des utilisateurs.
+
+Tâches réalisées :
+
+* Implémentation de l’authentification **JWT**
+* Création du **User Model**
+* Création des endpoints :
+
+  * Login
+  * Register
+  * Get User
+* Sécurisation des endpoints avec **JWT Token**
+* Configuration de **Swagger avec bouton Authorize**
+* Documentation des endpoints liés aux utilisateurs
+
+---
+
+## Kayleb
+
+Responsable de la gestion des livres.
+
+Tâches réalisées :
+
+* Création du **Book Model**
+* Implémentation du **BooksController**
+* CRUD complet des livres :
+
+  * Ajouter un livre
+  * Modifier un livre
+  * Supprimer un livre
+  * Consulter les livres
+* Pagination et filtrage des livres
+* Validation des données
+
+---
+
+## Perez
+
+Responsable de la gestion des emprunts.
+
+Tâches réalisées :
+
+* Création du **Borrowing Model**
+* Gestion du **BorrowCode**
+* Implémentation du **BorrowingsController**
+* Gestion des relations :
+
+  * un emprunt peut contenir plusieurs livres
+  * un livre peut être emprunté plusieurs fois
+* Gestion des **dates d’emprunt et de retour**
+* Implémentation de la logique métier des emprunts
+
+---
+
+## Travail collaboratif
+
+Les éléments suivants ont été réalisés en collaboration :
+
+* Conception de la **base de données**
+* Mise en place de **Entity Framework Core**
+* Création des **DTOs**
+* Tests de l’API via **Swagger**
+* Gestion des erreurs HTTP
+* Revue du code et intégration GitHub
+
+---
+
+Tout le code a été **validé, testé et adapté par les membres de l’équipe**.
