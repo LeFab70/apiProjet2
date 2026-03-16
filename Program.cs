@@ -12,6 +12,10 @@ builder.Services.AddOpenApi();
 builder.Services.AddDbContext<ApiBorrowingContext>(options =>
     options.UseInMemoryDatabase("BorrowingDb"));
 
+
+builder.Services.AddDbContext<ApiBorrowingContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
