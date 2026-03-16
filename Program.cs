@@ -1,9 +1,14 @@
+using ApiProjetBorrowing.Dtos;
+using ApiProjetBorrowing.Endpoints.UsersEndpoints;
 using ApiProjetBorrowing.Models;
+using ApiProjetBorrowing.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+// Inscrire les services de gestion des utilisateurs
+builder.Services.AddScoped<IUserService, UserService>();
 
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
@@ -35,4 +40,12 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+app.MapGet("/", () => "Bienvenue sur l'API de gestion des emprunts de livres !");
+
+
+
+// Mappez les endpoints pour les utilisateurs
+app.MapUsersEndpoints();
+
+//lance l'application
 app.Run();

@@ -1,0 +1,15 @@
+GET https://localhost:7157/users
+###
+GET https://localhost:7157
+###
+GET https://localhost:7157/users/1
+###
+POST https://localhost:7157/users
+Content-Type: application/json
+
+{
+    "FirstName": "testuser",
+    "LastName": "testuser",
+    "Email":"Test@gmail.com",
+    "Password":"Test1234"
+}
