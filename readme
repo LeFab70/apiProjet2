@@ -60,6 +60,17 @@ dotnet restore
 dotnet ef database update
 ```
 
+### 3️⃣bis Initialisation (seed) des données
+
+Lors du premier lancement, la base de données est **automatiquement seedée** dans `Program.cs` via `DbInitializer.Seed(context);`.
+
+- Le seed applique d’abord les migrations (`context.Database.Migrate()`).
+- S’il n’y a aucun utilisateur, il crée un **compte administrateur par défaut** :
+  - **Email**: `admin@test.com`
+  - **Password**: `Password123!`
+
+Ces identifiants sont ceux utilisés dans la section **Authentification JWT**.
+
 ### 4️⃣ Lancer l’API
 
 ```bash
