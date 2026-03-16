@@ -71,13 +71,13 @@ dotnet run
 Ouvrir dans le navigateur :
 
 ```
-https://localhost:5250/swagger/index.html
+https://localhost:7157/swagger/index.html
 ```
 
 ou
 
 ```
-https://localhost:5000/swagger
+https://localhost:7157/swagger
 ```
 
 Swagger permet de **tester tous les endpoints directement depuis l’interface web**.
@@ -111,6 +111,76 @@ Dans Swagger :
 
 ---
 
+# 👤 Endpoints Users (tests)
+
+Les principaux endpoints pour gérer les utilisateurs (`UsersController`) et les tester facilement sont :
+
+Base URL (exécution locale actuelle) :
+
+```text
+https://localhost:7157
+```
+
+### 📋 Récupérer tous les utilisateurs
+
+```http
+GET https://localhost:7157/api/users
+```
+
+### 📋 Récupérer un utilisateur par Id
+
+```http
+GET https://localhost:7157/api/users/{id}
+```
+
+Exemple :
+
+```http
+GET https://localhost:7157/api/users/2
+```
+
+### ➕ Créer un utilisateur
+
+```http
+POST https://localhost:7157/api/users
+Content-Type: application/json
+
+{
+  "FirstName": "Fabrice",
+  "LastName": "Orgrick",
+  "Email": "fab@gmail.com",
+  "Password": "Test1234@"
+}
+```
+
+### ✏️ Mettre à jour un utilisateur
+
+```http
+PUT https://localhost:7157/api/users/{id}
+Content-Type: application/json
+
+{
+  "FirstName": "Fabrice",
+  "LastName": "Kouonang"
+}
+```
+
+### ❌ Supprimer un utilisateur
+
+```http
+DELETE https://localhost:7157/api/users/{id}
+```
+
+Exemple :
+
+```http
+DELETE https://localhost:7157/api/users/1
+```
+
+Pour des exemples prêts à l’emploi, vous pouvez également utiliser le fichier `tests/userTest.http` dans l’IDE.
+
+---
+
 # 📦 Fonctionnalités implémentées
 
 ✔ CRUD complet pour toutes les entités
@@ -130,32 +200,36 @@ Dans Swagger :
 
 # 🗂 Structure du projet
 
+L’API utilise désormais une **approche par services, interfaces et endpoints minimal APIs**, au lieu d’exposer directement des controllers.
+
 ```
-Controllers/
-    AuthController.cs
-    UsersController.cs
-    BooksController.cs
-    BorrowingsController.cs
+Endpoints/
+    UsersEndpoints/
+        UsersEndPoints.cs       -> définition des routes /api/users
+
+Dtos/
+    users/
+        UserDto.cs
+        CreateUserDto.cs
+        UpdateUserDto.cs
 
 Models/
     User.cs
     Book.cs
     Borrowing.cs
 
-DTOs/
-    CreateBorrowingDto.cs
-    UpdateBorrowingDto.cs
-    BorrowingResponseDto.cs
+services/
+    usersServices/
+        IUserService.cs         -> interface du service utilisateur
+        UserService.cs          -> implémentation de la logique métier User
 
 Data/
     AppDbContext.cs
 
-Services/
-    AuthService.cs
-    BorrowingService.cs
-
-Program.cs
+Program.cs                     -> enregistrement des services + mapping des endpoints
 ```
+
+Les endpoints HTTP sont regroupés dans le dossier `Endpoints`, la logique métier est portée par les **services** (interfaces + implémentations), et les **DTOs** servent de contrat d’échange entre l’API et les clients.
 
 ---
 
