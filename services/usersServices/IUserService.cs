@@ -11,6 +11,7 @@ namespace ApiProjetBorrowing.Services
         Task<UserDto> CreateUserAsync(CreateUserDto dto);
         Task<UserDto?> UpdateUserAsync(int id, UpdateUserDto dto);
         Task<bool> DeleteUserAsync(int id);
+        Task<User?> GetUserByEmailAsync(string email);
     }
 }
 

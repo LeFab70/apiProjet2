@@ -181,6 +181,17 @@ Pour des exemples prêts à l’emploi, vous pouvez également utiliser le fichi
 
 ---
 
+# ⚙️ Tests rapides avec VS Code (REST Client)
+
+Pour tester rapidement les requêtes HTTP, vous pouvez installer l’extension **“REST Client”** dans VS Code.
+
+- **Extension**: REST Client  
+- **Utilisation**: ouvrir les fichiers `.http` (par exemple `tests/userTest.http`) et cliquer sur le lien `Send Request` au-dessus de chaque requête pour l’exécuter.
+
+Cela permet de tester les endpoints HTTPS sans quitter l’éditeur.
+
+---
+
 # 📦 Fonctionnalités implémentées
 
 ✔ CRUD complet pour toutes les entités

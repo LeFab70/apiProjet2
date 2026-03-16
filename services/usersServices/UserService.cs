@@ -115,5 +115,11 @@ namespace ApiProjetBorrowing.Services
             await _context.SaveChangesAsync();
             return true;
         }
+
+        public async Task<User?> GetUserByEmailAsync(string email)
+        {
+            // Recherche l'utilisateur complet en base de données
+            return await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
+        }
     }
 }
