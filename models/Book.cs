@@ -7,15 +7,15 @@ namespace ApiProjetBorrowing.Models
         public int Id { get; set; }
 
         [Required]
-        public string Title { get; set; } = null!;
+        public required string Title { get; set; }
 
         [Required]
-        public string Author { get; set; } = null!;
+        public required string Author { get; set; }
 
         [Required]
-        public string ISBN { get; set; } = null!;
+        public required string ISBN { get; set; }
 
-        [Range(0, int.MaxValue)]
+        [Range(1, int.MaxValue)]
         public int Quantity { get; set; }
 
         public ICollection<BorrowingBook> BorrowingBooks { get; set; } = new List<BorrowingBook>();

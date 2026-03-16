@@ -1,15 +1,27 @@
-GET https://localhost:7157/users
+GET https://localhost:7157/api/users
 ###
 GET https://localhost:7157
 ###
-GET https://localhost:7157/users/1
+GET https://localhost:7157/api/users/1
 ###
-POST https://localhost:7157/users
+POST https://localhost:7157/api/users
 Content-Type: application/json
 
 {
-    "FirstName": "testuser",
-    "LastName": "testuser",
-    "Email":"Test@gmail.com",
-    "Password":"Test1234"
+    "FirstName": "Fabrice",
+    "LastName": "Orgrick",
+    "Email":"fab@gmail.com",
+    "Password":"Test1234@"
 }
+
+###
+PUT https://localhost:7157/api/users/2
+Content-Type: application/json
+
+{
+    "FirstName": "Fabrice",
+    "LastName": "Kouonang"
+}
+
+###
+DELETE https://localhost:7157/api/users/1

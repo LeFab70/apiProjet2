@@ -35,7 +35,7 @@ namespace ApiProjetBorrowing.Endpoints.UsersEndpoints
             return Results.Created($"/api/users/{createdUser.Id}", createdUser);
         }
 
-        private static async Task<IResult> UpdateUser(int id, CreateUserDto updateUserDto, IUserService userService)
+        private static async Task<IResult> UpdateUser(int id, UpdateUserDto updateUserDto, IUserService userService)
         {
             var updatedUser = await userService.UpdateUserAsync(id, updateUserDto);
             return updatedUser is not null ? Results.Ok(updatedUser) : Results.NotFound();

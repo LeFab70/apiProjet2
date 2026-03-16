@@ -7,6 +7,9 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+//ajouter la validation des données d'entrée des dto
+builder.Services.AddValidation();
+
 // Inscrire les services de gestion des utilisateurs
 builder.Services.AddScoped<IUserService, UserService>();
 
@@ -14,8 +17,8 @@ builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 
 //inscrire le context de la base de données, ici on utilise une base de données en mémoire pour le développement et les tests
-builder.Services.AddDbContext<ApiBorrowingContext>(options =>
-    options.UseInMemoryDatabase("BorrowingDb"));
+// builder.Services.AddDbContext<ApiBorrowingContext>(options =>
+//     options.UseInMemoryDatabase("BorrowingDb"));
 
 
 //pour utiliser une base de données SQL Server, décommentez la ligne suivante et commentez la ligne précédente

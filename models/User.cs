@@ -8,13 +8,15 @@ namespace ApiProjetBorrowing.Models
         public int Id { get; set; }
         [Required]
         [StringLength(50)]
-        public string FirstName { get; set; }
+        public required string FirstName { get; set; }
+
+        //le nom de famille de l'utilisateur peut être vide, mais ne doit pas dépasser 50 caractères
         [StringLength(50)]
-        public string LastName { get; set; }
+        public string LastName { get; set; } = String.Empty;
         [Required]
         [EmailAddress]
-        public string Email { get; set; }
+        public required string Email { get; set; }
         [Required]
-        public string Password { get; set; }
+        public required string Password { get; set; }
     }
 }

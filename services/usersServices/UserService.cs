@@ -34,6 +34,13 @@ namespace ApiProjetBorrowing.Services
 
         public async Task<UserDto> CreateUserAsync(CreateUserDto dto)
         {
+            //si le dto est null, une exception est levée pour éviter les erreurs de référence null lors de l'accès aux propriétés du dto. Cela garantit que les données nécessaires pour créer un utilisateur sont fournies avant de tenter de créer l'utilisateur dans la base de données.
+            if (dto is null) //
+                throw new ArgumentNullException(nameof(dto));
+
+
+
+            //             Avant de créer un nouvel utilisateur, il est important de vérifier que l'email n'est pas déjà utilisé par un autre utilisateur pour éviter les doublons. Si l'email existe déjà, une exception est levée.
             if (await _context.Users.AnyAsync(u => u.Email == dto.Email))
                 throw new Exception("Email déjà utilisé.");
             //hasher le mot de passe avant de le stocker en base de données pour des raisons de sécurité
@@ -53,19 +60,43 @@ namespace ApiProjetBorrowing.Services
             return new UserDto(user.Id, user.FirstName, user.LastName, user.Email);
         }
 
-        public async Task<UserDto?> UpdateUserAsync(int id, CreateUserDto dto)
+        public async Task<UserDto?> UpdateUserAsync(int id, UpdateUserDto dto)
         {
+
+            //validation du dto pour s'assurer que les données nécessaires pour mettre à jour un utilisateur sont fournies. Si le dto est null, une exception est levée pour éviter les erreurs de référence null lors de l'accès aux propriétés du dto.
+            if (dto is null)
+                throw new ArgumentNullException(nameof(dto));
+
+            //             Avant de mettre à jour un utilisateur, il est important de vérifier que l'email n'est pas déjà utilisé par un autre utilisateur (autre que celui que nous sommes en train de mettre à jour) pour éviter les doublons. Si l'email existe déjà, une exception est levée.
+            if (await _context.Users.AnyAsync(u => u.Email == dto.Email && u.Id != id))
+                throw new Exception("Email déjà utilisé.");
+
             var user = await _context.Users.FindAsync(id);
             if (user is null)
                 return null;
 
-            //             Si le mot de passe a été modifié, il doit être re-hashé avant d'être stocké en base de données
-            var hashedPassword = BCrypt.Net.BCrypt.HashPassword(dto.Password);
 
-            user.FirstName = dto.FirstName;
-            user.LastName = dto.LastName;
-            user.Email = dto.Email;
-            user.Password = hashedPassword;
+
+            if (dto.FirstName is not null)
+                user.FirstName = dto.FirstName;
+
+            if (dto.LastName is not null)
+                user.LastName = dto.LastName;
+
+            if (dto.Email is not null)
+            {
+                if (await _context.Users.AnyAsync(u => u.Email == dto.Email && u.Id != id))
+                    throw new Exception("Email déjà utilisé.");
+
+                user.Email = dto.Email;
+            }
+
+            if (dto.Password is not null)
+            {
+                if (!BCrypt.Net.BCrypt.Verify(dto.Password, user.Password))
+                    user.Password = BCrypt.Net.BCrypt.HashPassword(dto.Password);
+            }
+
 
             await _context.SaveChangesAsync();
 
@@ -74,6 +105,8 @@ namespace ApiProjetBorrowing.Services
 
         public async Task<bool> DeleteUserAsync(int id)
         {
+            //             Avant de supprimer un utilisateur, il est important de vérifier que l'utilisateur existe dans la base de données. Si l'utilisateur n'existe pas, la méthode retourne false pour indiquer que la suppression a échoué.
+
             var user = await _context.Users.FindAsync(id);
             if (user is null)
                 return false;

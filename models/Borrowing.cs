@@ -7,8 +7,9 @@ namespace ApiProjetBorrowing.Models
         public int Id { get; set; }
 
         [Required]
-        public string BorrowCode { get; set; } = null!;
+        public required string BorrowCode { get; set; }
 
+        [Required]
         public DateTime BorrowDate { get; set; } = DateTime.UtcNow;
 
         // Relation vers User
