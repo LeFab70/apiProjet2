@@ -1,12 +1,13 @@
+using ApiProjetBorrowing.Data;
 using ApiProjetBorrowing.Dtos;
+using ApiProjetBorrowing.Endpoints;
 using ApiProjetBorrowing.Endpoints.UsersEndpoints;
 using ApiProjetBorrowing.Models;
+using ApiProjetBorrowing.services.borrowingServices;
 using ApiProjetBorrowing.Services;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using ApiProjetBorrowing.Endpoints;
-using ApiProjetBorrowing.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -47,18 +48,18 @@ builder.Services.AddAuthentication(options =>
 });
 // Inscrire les services de gestion des utilisateurs
 builder.Services.AddScoped<IUserService, UserService>();
-
+builder.Services.AddScoped<IBorrowingService, BorrowingService>();
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 
 //inscrire le context de la base de données, ici on utilise une base de données en mémoire pour le développement et les tests
-// builder.Services.AddDbContext<ApiBorrowingContext>(options =>
-//     options.UseInMemoryDatabase("BorrowingDb"));
+ builder.Services.AddDbContext<ApiBorrowingContext>(options =>
+    options.UseInMemoryDatabase("BorrowingDb"));
 
 
 //pour utiliser une base de données SQL Server, décommentez la ligne suivante et commentez la ligne précédente
-builder.Services.AddDbContext<ApiBorrowingContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+//builder.Services.AddDbContext<ApiBorrowingContext>(options =>
+ //   options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 
 
@@ -99,6 +100,7 @@ app.MapGet("/", () => "Bienvenue sur l'API de gestion des emprunts de livres !")
 app.MapUsersEndpoints();
 // Mappez les endpoints pour l'authentification
 app.MapAuthEndpoints();
-
+// Mapper les endpoints pour les emprunts
+app.MapBorrowingEndpoints();
 //lance l'application
 app.Run();

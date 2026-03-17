@@ -7160,25 +7160,31 @@
     ]
   },
   "packageFolders": {
-    "/Users/fabricekouonang/.nuget/packages/": {}
+    "C:\\Users\\nguef\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/fabricekouonang/Documents/apiDotnet/ApiProjetBorrowing/ApiProjetBorrowing.csproj",
+      "projectUniqueName": "D:\\apiProjet2\\ApiProjetBorrowing.csproj",
       "projectName": "ApiProjetBorrowing",
-      "projectPath": "/Users/fabricekouonang/Documents/apiDotnet/ApiProjetBorrowing/ApiProjetBorrowing.csproj",
-      "packagesPath": "/Users/fabricekouonang/.nuget/packages/",
-      "outputPath": "/Users/fabricekouonang/Documents/apiDotnet/ApiProjetBorrowing/obj/",
+      "projectPath": "D:\\apiProjet2\\ApiProjetBorrowing.csproj",
+      "packagesPath": "C:\\Users\\nguef\\.nuget\\packages\\",
+      "outputPath": "D:\\apiProjet2\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "/Users/fabricekouonang/.nuget/NuGet/NuGet.Config"
+        "C:\\Users\\nguef\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net10.0"
       ],
       "sources": {
-        "/opt/homebrew/Cellar/dotnet/10.0.105/libexec/library-packs": {},
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -7197,7 +7203,7 @@
         "auditLevel": "low",
         "auditMode": "all"
       },
-      "SdkAnalysisLevel": "10.0.100"
+      "SdkAnalysisLevel": "10.0.200"
     },
     "frameworks": {
       "net10.0": {
@@ -7267,7 +7273,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/opt/homebrew/Cellar/dotnet/10.0.105/libexec/sdk/10.0.105/PortableRuntimeIdentifierGraph.json",
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.200/PortableRuntimeIdentifierGraph.json",
         "packagesToPrune": {
           "Microsoft.AspNetCore": "(,10.0.32767]",
           "Microsoft.AspNetCore.Antiforgery": "(,10.0.32767]",

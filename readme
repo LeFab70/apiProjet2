@@ -234,6 +234,9 @@ Dtos/
         UserDto.cs
         CreateUserDto.cs
         UpdateUserDto.cs
+    borrowings/
+        CreateBorrowingDto.cs   -> (Nouveau) Contrat pour la création
+        BorrowingResponseDto.cs -> (Nouveau) Format de réponse de l'emprunt
 
 Models/
     User.cs

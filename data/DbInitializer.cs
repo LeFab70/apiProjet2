@@ -8,8 +8,8 @@ namespace ApiProjetBorrowing.Data
     public static class DbInitializer
     {
         public static void Seed(ApiBorrowingContext context)
-        {
-            context.Database.Migrate();
+        { 
+            context.Database.EnsureCreated();
 
             if (!context.Users.Any())
             {
@@ -22,8 +22,28 @@ namespace ApiProjetBorrowing.Data
                 };
 
                 context.Users.Add(user);
-                context.SaveChanges();
             }
+
+            // Ajoutons quelques livres pour pouvoir tester ses emprunts !
+            if (!context.Books.Any())
+            {
+                context.Books.AddRange(
+                    new Book
+                    {
+                        Title = "L'Étranger",
+                        Author = "Albert Camus",
+                        ISBN = "978-2070360024" // Ajout de l'ISBN obligatoire
+                    },
+                    new Book
+                    {
+                        Title = "1984",
+                        Author = "George Orwell",
+                        ISBN = "978-0451524935" // Ajout de l'ISBN obligatoire
+                    }
+                );
+            }
+
+            context.SaveChanges();
         }
     }
 }
