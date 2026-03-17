@@ -3,14 +3,6 @@
   "WorkspaceRootPath": "D:\\apiProjet2\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{BCE5BCCD-0D4F-0A70-0E21-4C5009E1CFEB}|ApiProjetBorrowing.csproj|d:\\apiprojet2\\services\\borrowingservices\\borrowingservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{BCE5BCCD-0D4F-0A70-0E21-4C5009E1CFEB}|ApiProjetBorrowing.csproj|solutionrelative:services\\borrowingservices\\borrowingservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{BCE5BCCD-0D4F-0A70-0E21-4C5009E1CFEB}|ApiProjetBorrowing.csproj|d:\\apiprojet2\\endpoints\\borrowingendpoints\\borrowingendpoints.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{BCE5BCCD-0D4F-0A70-0E21-4C5009E1CFEB}|ApiProjetBorrowing.csproj|solutionrelative:endpoints\\borrowingendpoints\\borrowingendpoints.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{BCE5BCCD-0D4F-0A70-0E21-4C5009E1CFEB}|ApiProjetBorrowing.csproj|d:\\apiprojet2\\data\\dbinitializer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{BCE5BCCD-0D4F-0A70-0E21-4C5009E1CFEB}|ApiProjetBorrowing.csproj|solutionrelative:data\\dbinitializer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -19,12 +11,20 @@
       "RelativeMoniker": "D:0:0:{BCE5BCCD-0D4F-0A70-0E21-4C5009E1CFEB}|ApiProjetBorrowing.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{BCE5BCCD-0D4F-0A70-0E21-4C5009E1CFEB}|ApiProjetBorrowing.csproj|d:\\apiprojet2\\endpoints\\usersendpoints\\usersendpoints.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{BCE5BCCD-0D4F-0A70-0E21-4C5009E1CFEB}|ApiProjetBorrowing.csproj|solutionrelative:endpoints\\usersendpoints\\usersendpoints.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{BCE5BCCD-0D4F-0A70-0E21-4C5009E1CFEB}|ApiProjetBorrowing.csproj|d:\\apiprojet2\\services\\borrowingservices\\borrowingservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BCE5BCCD-0D4F-0A70-0E21-4C5009E1CFEB}|ApiProjetBorrowing.csproj|solutionrelative:services\\borrowingservices\\borrowingservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{BCE5BCCD-0D4F-0A70-0E21-4C5009E1CFEB}|ApiProjetBorrowing.csproj|d:\\apiprojet2\\data\\apiborrowing.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{BCE5BCCD-0D4F-0A70-0E21-4C5009E1CFEB}|ApiProjetBorrowing.csproj|solutionrelative:data\\apiborrowing.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BCE5BCCD-0D4F-0A70-0E21-4C5009E1CFEB}|ApiProjetBorrowing.csproj|d:\\apiprojet2\\endpoints\\borrowingendpoints\\borrowingendpoints.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BCE5BCCD-0D4F-0A70-0E21-4C5009E1CFEB}|ApiProjetBorrowing.csproj|solutionrelative:endpoints\\borrowingendpoints\\borrowingendpoints.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BCE5BCCD-0D4F-0A70-0E21-4C5009E1CFEB}|ApiProjetBorrowing.csproj|d:\\apiprojet2\\endpoints\\usersendpoints\\usersendpoints.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BCE5BCCD-0D4F-0A70-0E21-4C5009E1CFEB}|ApiProjetBorrowing.csproj|solutionrelative:endpoints\\usersendpoints\\usersendpoints.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{BCE5BCCD-0D4F-0A70-0E21-4C5009E1CFEB}|ApiProjetBorrowing.csproj|d:\\apiprojet2\\services\\borrowingservices\\iborrowingservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -46,7 +46,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 8,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Bookmark",
@@ -62,20 +62,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 0,
               "Title": "DbInitializer.cs",
               "DocumentMoniker": "D:\\apiProjet2\\data\\DbInitializer.cs",
               "RelativeDocumentMoniker": "data\\DbInitializer.cs",
               "ToolTip": "D:\\apiProjet2\\data\\DbInitializer.cs",
               "RelativeToolTip": "data\\DbInitializer.cs",
-              "ViewState": "AgIAAAEAAAAAAAAAAAAQwA8AAAAjAAAAAAAAAA==",
+              "ViewState": "AgIAAA0AAAAAAAAAAAAQwBwAAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-03-17T13:53:34.24Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 5,
               "Title": "UsersEndPoints.cs",
               "DocumentMoniker": "D:\\apiProjet2\\Endpoints\\UsersEndpoints\\UsersEndPoints.cs",
               "RelativeDocumentMoniker": "Endpoints\\UsersEndpoints\\UsersEndPoints.cs",
@@ -83,38 +83,37 @@
               "RelativeToolTip": "Endpoints\\UsersEndpoints\\UsersEndPoints.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-17T13:47:27.842Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-03-17T13:47:27.842Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 1,
               "Title": "Program.cs",
               "DocumentMoniker": "D:\\apiProjet2\\Program.cs",
               "RelativeDocumentMoniker": "Program.cs",
               "ToolTip": "D:\\apiProjet2\\Program.cs",
               "RelativeToolTip": "Program.cs",
-              "ViewState": "AgIAACkAAAAAAAAAAAAgwD0AAAADAAAAAAAAAA==",
+              "ViewState": "AgIAADgAAAAAAAAAAAAgwE8AAAAfAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-03-17T13:42:00.232Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 4,
               "Title": "BorrowingEndpoints.cs",
               "DocumentMoniker": "D:\\apiProjet2\\Endpoints\\BorrowingEndpoints\\BorrowingEndpoints.cs",
               "RelativeDocumentMoniker": "Endpoints\\BorrowingEndpoints\\BorrowingEndpoints.cs",
               "ToolTip": "D:\\apiProjet2\\Endpoints\\BorrowingEndpoints\\BorrowingEndpoints.cs",
               "RelativeToolTip": "Endpoints\\BorrowingEndpoints\\BorrowingEndpoints.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAKAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAhAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-03-17T13:40:23.655Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 3,
               "Title": "ApiBorrowing.cs",
               "DocumentMoniker": "D:\\apiProjet2\\data\\ApiBorrowing.cs",
               "RelativeDocumentMoniker": "data\\ApiBorrowing.cs",
@@ -127,13 +126,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "BorrowingService.cs",
               "DocumentMoniker": "D:\\apiProjet2\\services\\borrowingServices\\BorrowingService.cs",
               "RelativeDocumentMoniker": "services\\borrowingServices\\BorrowingService.cs",
               "ToolTip": "D:\\apiProjet2\\services\\borrowingServices\\BorrowingService.cs",
               "RelativeToolTip": "services\\borrowingServices\\BorrowingService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABkAAAAkAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAABZAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-03-17T13:20:14.788Z",
               "EditorCaption": ""
@@ -148,8 +147,7 @@
               "RelativeToolTip": "services\\borrowingServices\\IBorrowingService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAABRAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-17T13:16:51.854Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-03-17T13:16:51.854Z"
             },
             {
               "$type": "Document",
@@ -161,8 +159,7 @@
               "RelativeToolTip": "Dtos\\BorrowingDto\\BorrowingResponseDto.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAuAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-17T13:05:08.822Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-03-17T13:05:08.822Z"
             },
             {
               "$type": "Document",
@@ -174,8 +171,7 @@
               "RelativeToolTip": "Dtos\\BorrowingDto\\CreateBorrowingDto.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-17T13:04:41.633Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-03-17T13:04:41.633Z"
             }
           ]
         }

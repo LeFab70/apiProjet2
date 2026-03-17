@@ -14,7 +14,7 @@ public static class BorrowingEndpoints
         {
             var result = await service.CreateBorrowingAsync(dto);
             return Results.Created($"/api/borrowings/{result?.Id}", result);
-        });
+        }).RequireAuthorization();
 
         // Récupérer un emprunt par ID
         group.MapGet("/{id}", async (int id, IBorrowingService service) =>
