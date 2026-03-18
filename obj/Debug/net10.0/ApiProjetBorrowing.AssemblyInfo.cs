@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ApiProjetBorrowing")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+62f97bdb910c5e88ce3603a8cefeb3ba67e5903e")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+caf0bf0bfab120f393a00f768ca0a1bb49a2a736")]
 [assembly: System.Reflection.AssemblyProductAttribute("ApiProjetBorrowing")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ApiProjetBorrowing")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

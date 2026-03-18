@@ -6,7 +6,7 @@ Authorization: Bearer {{token}}
 ###
 
 // Requête pour obtenir un livre spécifique
-GET https://localhost:7157/api/books/1
+GET https://localhost:7157/api/books/2
 Authorization: Bearer {{token}}
 ###
 
@@ -19,6 +19,7 @@ Authorization: Bearer {{token}}
     "Title": "The Great",
     "Author": "F. Scott Fitzgerald",
     "ISBN": "978-0743273565",
+    "Quantity": 5
 }
 
 ###
@@ -31,6 +32,7 @@ Content-Type: application/json
     "Title": "The Great Gatsby",
     "Author": "F. Scott Fitzgerald",
     "ISBN": "978-0743273565",
+    "Quantity": 10
 }
 ###
 

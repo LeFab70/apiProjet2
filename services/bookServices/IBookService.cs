@@ -15,5 +15,8 @@ namespace ApiProjetBorrowing.services.bookServices
 
         // Récupérer un livre par ID
         Task<LivreDto?> GetBookByIdAsync(int id);
+
+        // Récupérer tous les livres
+        Task<IEnumerable<LivreDto>> GetAllBooksAsync();
     }
 }

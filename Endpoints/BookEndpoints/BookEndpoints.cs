@@ -30,6 +30,12 @@ namespace ApiProjetBorrowing.Endpoints.BookEndpoints
                 var result = await bookService.GetBookByIdAsync(id);
                 return result is not null ? Results.Ok(result) : Results.NotFound();
             });
+
+            app.MapGet("/api/books", async (IBookService bookService) =>
+            {
+                var result = await bookService.GetAllBooksAsync();
+                return Results.Ok(result);
+            });
         }
     }
 }

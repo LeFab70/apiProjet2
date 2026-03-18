@@ -60,5 +60,12 @@ namespace ApiProjetBorrowing.services.bookServices
 
             return new LivreDto(book.Id, book.Title, book.Author, book.ISBN, book.Quantity);
         }
+
+        public async Task<IEnumerable<LivreDto>> GetAllBooksAsync()
+        {
+            return await _context.Books
+                .Select(b => new LivreDto(b.Id, b.Title, b.Author, b.ISBN, b.Quantity))
+                .ToListAsync();
+        }
     }
 }

@@ -2,9 +2,11 @@ using ApiProjetBorrowing.Data;
 using ApiProjetBorrowing.Dtos;
 using ApiProjetBorrowing.Endpoints;
 using ApiProjetBorrowing.Endpoints.UsersEndpoints;
+using ApiProjetBorrowing.Endpoints.BookEndpoints;
 using ApiProjetBorrowing.Models;
 using ApiProjetBorrowing.services.borrowingServices;
 using ApiProjetBorrowing.Services;
+using ApiProjetBorrowing.services.bookServices;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -50,6 +52,7 @@ builder.Services.AddAuthentication(options =>
 // Inscrire les services de gestion des utilisateurs
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IBorrowingService, BorrowingService>();
+builder.Services.AddScoped<IBookService, BookService>();
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 
@@ -96,5 +99,7 @@ app.MapUsersEndpoints();
 app.MapAuthEndpoints();
 // Mapper les endpoints pour les emprunts
 app.MapBorrowingEndpoints();
+// Mapper les endpoints pour les livres
+app.MapBookEndpoints();
 //lance l'application
 app.Run();
