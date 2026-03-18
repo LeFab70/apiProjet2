@@ -1,0 +1,38 @@
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZW1haWwiOiJhZG1pbkB0ZXN0LmNvbSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJBZG1pbiIsImV4cCI6MTc3MzgxNDY5NywiaXNzIjoiQXBpUHJvamV0Qm9ycm93aW5nIiwiYXVkIjoiQXBpUHJvamV0Qm9ycm93aW5nVXNlcnMifQ.yiN67j3iota3wzurG8WGwRkA6lbJLAa7k2eKg_Z7erM
+
+// Requête pour obtenir tous les livres
+GET https://localhost:7157/api/books
+Authorization: Bearer {{token}}
+###
+
+// Requête pour obtenir un livre spécifique
+GET https://localhost:7157/api/books/1
+Authorization: Bearer {{token}}
+###
+
+// Requête pour ajouter un nouveau livre
+POST https://localhost:7157/api/books
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "Title": "The Great",
+    "Author": "F. Scott Fitzgerald",
+    "ISBN": "978-0743273565",
+}
+
+###
+
+// Requête pour mettre à jour un livre existant
+PUT https://localhost:7157/api/books/1
+Content-Type: application/json
+
+{
+    "Title": "The Great Gatsby",
+    "Author": "F. Scott Fitzgerald",
+    "ISBN": "978-0743273565",
+}
+###
+
+// Requête pour supprimer un livre
+DELETE https://localhost:7157/api/books/1
