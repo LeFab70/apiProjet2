@@ -1,0 +1,25 @@
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZW1haWwiOiJhZG1pbkB0ZXN0LmNvbSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJBZG1pbiIsImV4cCI6MTc3MzgxNDY5NywiaXNzIjoiQXBpUHJvamV0Qm9ycm93aW5nIiwiYXVkIjoiQXBpUHJvamV0Qm9ycm93aW5nVXNlcnMifQ.yiN67j3iota3wzurG8WGwRkA6lbJLAa7k2eKg_Z7erM
+
+// 1) Création d'un emprunt (POST) — réponse attendue : 201 Created + corps emprunt (id, borrowCode, borrowDate, userName, bookTitles)
+POST http://localhost:5045/api/borrowings
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "userId": 1,
+  "bookIds": [1, 2]
+}
+
+###
+
+// 2) Récupérer un emprunt par son ID (GET) — utiliser l'id retourné par le POST ou un id existant
+GET http://localhost:5045/api/borrowings/1
+Authorization: Bearer {{token}}
+
+###
+
+// 3) Récupérer tous les emprunts d'un utilisateur (GET)
+GET http://localhost:5045/api/borrowings/user/1
+Authorization: Bearer {{token}}
+
+###

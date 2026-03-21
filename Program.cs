@@ -1,0 +1,132 @@
+using ApiProjetBorrowing.Data;
+using ApiProjetBorrowing.Endpoints;
+using ApiProjetBorrowing.OpenApi;
+using ApiProjetBorrowing.Endpoints.UsersEndpoints;
+using ApiProjetBorrowing.Endpoints.BookEndpoints;
+using ApiProjetBorrowing.Models;
+using ApiProjetBorrowing.services.borrowingServices;
+using ApiProjetBorrowing.Services;
+using ApiProjetBorrowing.services.bookServices;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using Swashbuckle.AspNetCore.SwaggerUI;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.OpenApi;
+
+
+var builder = WebApplication.CreateBuilder(args);
+
+// Récupérer la clé secrète pour JWT depuis la configuration
+var jwtKey = builder.Configuration["Jwt:Key"];
+//verifier que la clé n'est pas null ou vide, sinon une exception est levée pour éviter les erreurs de référence null lors de l'utilisation de la clé pour la validation du token JWT.
+if (string.IsNullOrEmpty(jwtKey))
+{
+    throw new Exception("La clé JWT n'est pas configurée. Veuillez vérifier la configuration.");
+}
+// Convertir la clé en bytes pour l'utiliser dans la validation du token JWT
+var keyBytes = System.Text.Encoding.UTF8.GetBytes(jwtKey!);
+
+
+// Add services to the container.
+//ajouter la validation des données d'entrée des dto
+builder.Services.AddValidation();
+
+//ajouter l'authentification JWT
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(keyBytes),
+        ValidateIssuer = true,
+        ValidIssuer = builder.Configuration["Jwt:Issuer"],
+        ValidateAudience = true,
+        ValidAudience = builder.Configuration["Jwt:Audience"],
+        ValidateLifetime = true,
+        ClockSkew = TimeSpan.Zero
+    };
+});
+
+// Inscrire les services de gestion des utilisateurs
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IBorrowingService, BorrowingService>();
+builder.Services.AddScoped<IBookService, BookService>();
+builder.Services.AddControllers();
+builder.Services.AddOpenApi(options =>
+{
+    options.AddDocumentTransformer((document, _, _) =>
+    {
+        document.Components ??= new OpenApiComponents();
+        document.Components.SecuritySchemes ??= new Dictionary<string, IOpenApiSecurityScheme>();
+        document.Components.SecuritySchemes.Add("Bearer", new OpenApiSecurityScheme
+        {
+            Type = SecuritySchemeType.Http,
+            Scheme = "bearer",
+            BearerFormat = "JWT",
+            Description =
+                "JWT obtenu via POST /api/login. Dans Swagger UI : Authorize → coller uniquement le token (sans le préfixe « Bearer » si le champ l’indique)."
+        });
+        return Task.CompletedTask;
+    });
+});
+
+// Base de données SQL Server
+builder.Services.AddDbContext<ApiBorrowingContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+
+var app = builder.Build();
+
+//Seed de la base de données pour les tests et le développement
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    var context = services.GetRequiredService<ApiBorrowingContext>();
+    DbInitializer.Seed(context);
+}
+
+
+//configuration de Swagger pour la documentation de l'API, qui est activée uniquement en environnement de développement. Swagger génère automatiquement une documentation interactive pour les endpoints de l'API, facilitant ainsi le test et la compréhension de l'API par les développeurs.
+if (app.Environment.IsDevelopment())
+{
+    app.MapOpenApi(); // génère /openapi/v1.json automatiquement
+
+    app.UseSwaggerUI(options =>
+    {
+        options.SwaggerEndpoint("/openapi/v1.json", "ApiBorrowing v1");
+    });
+}
+
+
+//redirecttoutes les requêtes HTTP vers HTTPS pour assurer la sécurité des données échangées entre le client et le serveur. Cela garantit que les communications sont chiffrées et protégées contre les interceptions potentielles.
+//app.UseHttpsRedirection();
+
+// Configure the HTTP request pipeline. pour gérer les requêtes HTTP entrantes et les acheminer vers les contrôleurs appropriés. Il configure également les middlewares pour l'authentification, l'autorisation, la redirection HTTPS, et la documentation Swagger en développement.
+app.UseAuthentication();
+app.UseAuthorization();
+
+app.MapControllers();
+
+app.MapGet("/", () => "Bienvenue sur l'API de gestion des emprunts de livres !")
+    .WithApiDoc(
+        "Accueil",
+        "Point d’entrée simple confirmant que l’API est en ligne. Aucune authentification.");
+
+
+
+// Mappez les endpoints pour les utilisateurs
+app.MapUsersEndpoints();
+// Mappez les endpoints pour l'authentification
+app.MapAuthEndpoints();
+// Mapper les endpoints pour les emprunts
+app.MapBorrowingEndpoints();
+// Mapper les endpoints pour les livres
+app.MapBookEndpoints();
+//lance l'application
+app.Run();

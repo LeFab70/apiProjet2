@@ -1,0 +1,36 @@
+//Remplacer avec un token valide pour les tests d'authentification
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZW1haWwiOiJhZG1pbkB0ZXN0LmNvbSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJBZG1pbiIsImV4cCI6MTc3MzgxNDY5NywiaXNzIjoiQXBpUHJvamV0Qm9ycm93aW5nIiwiYXVkIjoiQXBpUHJvamV0Qm9ycm93aW5nVXNlcnMifQ.yiN67j3iota3wzurG8WGwRkA6lbJLAa7k2eKg_Z7erM
+
+GET http://localhost:5045/api/users
+Authorization: Bearer {{token}}
+###
+GET http://localhost:5045
+Authorization: Bearer {{token}}
+###
+GET http://localhost:5045/api/users/2
+Authorization: Bearer {{token}}
+###
+
+POST http://localhost:5045/api/users
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "FirstName": "Fabrice",
+    "LastName": "Orgrick",
+    "Email":"fab@gmail.com",
+    "Password":"Test1234@"
+}
+
+###
+PUT http://localhost:5045/api/users/2
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "FirstName": "Fabrice",
+    "LastName": "Kouonang"
+}
+
+###
+DELETE http://localhost:5045/api/users/1

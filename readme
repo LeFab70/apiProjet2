@@ -1,0 +1,613 @@
+# 📚 Library Borrowing API
+
+## 👨‍💻 Équipe
+
+Projet réalisé par :
+
+* **Kayleb**
+* **Perez**
+* **Fabrice**
+
+---
+
+# 📖 Description du projet
+
+Library Borrowing API est une **API REST développée avec ASP.NET Core Web API** permettant la gestion des emprunts de livres dans une bibliothèque.
+
+Un utilisateur peut créer un compte et emprunter un ou plusieurs livres à l’aide d’un **code d’emprunt unique**.
+Chaque emprunt possède une **date d’emprunt**, et chaque livre possède une **date de retour** lorsqu’il est remis.
+
+Un livre peut être emprunté **plusieurs fois**, et un emprunt peut contenir **plusieurs livres**.
+
+L’API inclut :
+
+* une **documentation Swagger interactive**
+* une **authentification sécurisée avec JWT**
+* une **connexion à une base de données avec Entity Framework Core**
+
+---
+
+# 🛠 Technologies utilisées
+
+* **ASP.NET Core Web API**
+* **Entity Framework Core**
+* **JWT Authentication**
+* **Swagger / OpenAPI**
+* **SQL Database**
+* **Data Annotations Validation**
+
+
+---
+
+# 🚀 Lancer le projet localement
+
+### 1️⃣ Cloner le projet
+
+```bash
+git clone https://github.com/LeFab70/apiProjet2.git
+cd apiProjet2
+```
+
+### 2️⃣ Restaurer les dépendances
+
+```bash
+dotnet restore
+```
+
+### 2️⃣bis Chaîne de connexion dans `appsettings.json`
+
+Entity Framework lit **uniquement** la clé **`DefaultConnection`** (voir `Program.cs` : `GetConnectionString("DefaultConnection")`).
+
+Dans `appsettings.json`, le bloc ressemble à ceci (exemple du dépôt) :
+
+```json
+"ConnectionStrings": {
+  "DefaultConnection": "Server=localhost,1433;Database=BorrowingDb;User=sa;Password=SqlPassW0rd2026!;TrustServerCertificate=True;",
+  "DefaultConnection_pour_les_tests_others": "Data Source=.\\SQLEXPRESS;Initial Catalog=BorrowingDb;Integrated Security=True;Encrypt=False;TrustServerCertificate=True;"
+}
+```
+
+**Pour basculer de connexion**, il suffit de **renommer les clés** selon votre cas, de façon que la chaîne que vous voulez utiliser soit **toujours nommée `DefaultConnection`** :
+
+* **SQL Server en conteneur / Docker** (ex. `localhost,1433`) : gardez cette chaîne sous le nom **`DefaultConnection`** et renommez l’autre (par ex. `DefaultConnection_pour_les_tests_others`).
+* **SQL Express en local** (ex. `.\SQLEXPRESS`) : mettez la chaîne SQLEXPRESS sous le nom **`DefaultConnection`** et donnez à l’ancienne chaîne Docker un autre nom (par ex. `DefaultConnection_docker`).
+
+En résumé : **pas besoin de modifier le code**, seulement **échanger ou renommer les lignes** dans `ConnectionStrings` pour que **`DefaultConnection`** pointe vers le bon serveur. L’autre entrée sert de référence / secours selon l’environnement.
+
+### 3️⃣ Appliquer les migrations de base de données
+
+```bash
+dotnet ef database update
+```
+
+### 3️⃣bis Initialisation (seed) des données
+
+Lors du premier lancement, la base de données est **automatiquement seedée** dans `Program.cs` via `DbInitializer.Seed(context);`.
+
+- Le seed applique d’abord les migrations (`context.Database.Migrate()`).
+- S’il n’y a aucun utilisateur, il crée un **compte administrateur par défaut** :
+  - **Email**: `admin@test.com`
+  - **Password**: `Password123!`
+
+Ces identifiants sont ceux utilisés dans la section **Authentification JWT**.
+
+### 4️⃣ Lancer l’API
+
+Depuis la racine du projet, avec rechargement à chaud :
+
+```bash
+dotnet watch ApiProjetBorrowing.csproj run --launch-profile http
+```
+
+Le profil **`http`** (dans `Properties/launchSettings.json`) expose l’API sur **`http://localhost:5045`**.  
+(Sans `--launch-profile`, le premier profil défini est en général aussi `http` sur ce port.)
+
+### 5️⃣ Accéder à Swagger
+
+La **redirection HTTPS** n’est plus activée : utilisez **HTTP** et le port **5045**.
+
+Ouvrir dans le navigateur :
+
+```
+http://localhost:5045/swagger
+```
+
+Swagger permet de **tester tous les endpoints directement depuis l’interface web**.
+
+---
+
+# 🔐 Authentification JWT
+
+Certains endpoints sont protégés et nécessitent un **token JWT**.
+
+### Endpoint de connexion
+
+```
+POST /api/login
+```
+
+Corps JSON (exemple) : `email`, `password` (voir `tests/Login.http`).
+
+### Identifiants de test
+
+```
+Email : admin@test.com
+Password : Password123!
+```
+
+Après la connexion, un **token JWT est retourné** (propriété `Token` dans la réponse JSON).
+
+### Où mettre le token — Postman
+
+* **`POST /api/login`** : ne pas utiliser l’onglet **Authorization**. Envoyez uniquement le **Body** (raw, JSON) avec l’email et le mot de passe.
+* **Endpoints protégés** (par exemple `GET`, `PUT`, `DELETE` sur `/api/users`, qui exigent un JWT) :
+  1. Onglet **Authorization**
+  2. Type **Bearer Token**
+  3. Coller **uniquement** la valeur du JWT (Postman ajoute le préfixe `Bearer ` pour vous).
+
+### Où mettre le token — Swagger
+
+* **`POST /api/login`** : exécuter **sans** authentification préalable (pas besoin du bouton **Authorize** pour cette requête) ; récupérer le `Token` dans la réponse.
+* **Autres opérations protégées** (selon l’endpoint testé, par ex. liste ou détail des utilisateurs, mise à jour, suppression) :
+  1. Cliquer sur **Authorize** (cadenas) en haut de la page Swagger, si le schéma JWT est exposé dans la doc OpenAPI.
+  2. Saisir le JWT : souvent **seulement le token** ; si la fenêtre indique un format `Bearer <token>`, respecter ce qui est demandé.
+  3. Valider, puis lancer **Try it out** sur l’opération concernée.
+
+Si l’interface ne propose pas **Authorize**, ajoutez manuellement l’en-tête **`Authorization`** avec la valeur **`Bearer <votre_token>`** sur la requête à tester.
+
+---
+
+# 👤 Endpoints Users (tests)
+
+Les principaux endpoints pour gérer les utilisateurs (`UsersController`) et les tester facilement sont :
+
+Base URL (exécution locale avec le profil **http**) :
+
+```text
+http://localhost:5045
+```
+
+### 📋 Récupérer tous les utilisateurs
+
+```http
+GET http://localhost:5045/api/users
+```
+
+### 📋 Récupérer un utilisateur par Id
+
+```http
+GET http://localhost:5045/api/users/{id}
+```
+
+Exemple :
+
+```http
+GET http://localhost:5045/api/users/2
+```
+
+### ➕ Créer un utilisateur
+
+```http
+POST http://localhost:5045/api/users
+Content-Type: application/json
+
+{
+  "FirstName": "Fabrice",
+  "LastName": "Orgrick",
+  "Email": "fab@gmail.com",
+  "Password": "Test1234@"
+}
+```
+
+### ✏️ Mettre à jour un utilisateur
+
+```http
+PUT http://localhost:5045/api/users/{id}
+Content-Type: application/json
+
+{
+  "FirstName": "Fabrice",
+  "LastName": "Kouonang"
+}
+```
+
+### ❌ Supprimer un utilisateur
+
+```http
+DELETE http://localhost:5045/api/users/{id}
+```
+
+Exemple :
+
+```http
+DELETE http://localhost:5045/api/users/1
+```
+
+Pour des exemples prêts à l’emploi, vous pouvez également utiliser le fichier `tests/userTest.http` dans l’IDE.
+
+---
+
+# 📚 Endpoints Livres (tests)
+
+Les mêmes requêtes que dans **`tests/livreTest.http`** (REST Client), base **`http://localhost:5045`**.  
+En tête de fichier `.http`, définir un JWT valide (après `POST /api/login`) :
+
+```http
+@token = <votre_jwt>
+```
+
+### 📋 Liste des livres
+
+```http
+GET http://localhost:5045/api/books
+Authorization: Bearer {{token}}
+```
+
+### 📋 Détail d’un livre
+
+```http
+GET http://localhost:5045/api/books/2
+Authorization: Bearer {{token}}
+```
+
+### ➕ Ajouter un livre
+
+```http
+POST http://localhost:5045/api/books
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "Title": "The Great",
+    "Author": "F. Scott Fitzgerald",
+    "ISBN": "978-0743273565",
+    "Quantity": 5
+}
+```
+
+### ✏️ Mettre à jour un livre
+
+```http
+PUT http://localhost:5045/api/books/1
+Content-Type: application/json
+
+{
+    "Title": "The Great Gatsby",
+    "Author": "F. Scott Fitzgerald",
+    "ISBN": "978-0743273565",
+    "Quantity": 10
+}
+```
+
+### ❌ Supprimer un livre
+
+```http
+DELETE http://localhost:5045/api/books/1
+```
+
+Pour exécuter ces requêtes telles quelles, ouvrir **`tests/livreTest.http`** et utiliser **Send Request** au-dessus de chaque bloc `###`.
+
+---
+
+# 📖 Endpoints Emprunts (tests)
+
+Les mêmes requêtes que dans **`tests/emprunt.http`** (REST Client), base **`http://localhost:5045`**.  
+Définir un JWT valide en tête de fichier (après `POST /api/login`) :
+
+```http
+@token = <votre_jwt>
+```
+
+### ➕ Créer un emprunt
+
+```http
+POST http://localhost:5045/api/borrowings
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "userId": 1,
+  "bookIds": [1, 2]
+}
+```
+
+Réponse typique : **201 Created** avec un corps du type `id`, `borrowCode`, `borrowDate`, `userName`, `bookTitles` (titres des livres empruntés).
+
+### 📋 Récupérer un emprunt par identifiant
+
+```http
+GET http://localhost:5045/api/borrowings/1
+Authorization: Bearer {{token}}
+```
+
+Utiliser l’**id** renvoyé par le `POST` ou un id existant. Exemple de réponse **200 OK** :
+
+```json
+{
+  "id": 1,
+  "borrowCode": "BOR-2026-8C84",
+  "borrowDate": "2026-03-17T11:26:24",
+  "userName": "Admin User",
+  "bookTitles": [
+    "L'Étranger",
+    "1984"
+  ]
+}
+```
+
+(Les valeurs exactes dépendent des données en base.)
+
+### 📋 Récupérer tous les emprunts d’un utilisateur
+
+```http
+GET http://localhost:5045/api/borrowings/user/1
+Authorization: Bearer {{token}}
+```
+
+Remplacez **`1`** par l’identifiant utilisateur souhaité. Réponse : **200 OK** avec un tableau d’emprunts (même forme que ci-dessus par élément).
+
+Pour exécuter ces requêtes telles quelles, ouvrir **`tests/emprunt.http`** et utiliser **Send Request** au-dessus de chaque bloc `###`.
+
+---
+
+# ⚙️ Tests rapides avec VS Code (REST Client)
+
+Pour tester rapidement les requêtes HTTP, vous pouvez installer l’extension **“REST Client”** dans VS Code.
+
+- **Extension**: REST Client  
+- **Utilisation**: ouvrir les fichiers `.http` (`tests/userTest.http`, `tests/livreTest.http`, `tests/emprunt.http`, `tests/Login.http`, etc.) et cliquer sur le lien `Send Request` au-dessus de chaque requête pour l’exécuter.
+
+Cela permet de tester les endpoints sur **`http://localhost:5045`** sans quitter l’éditeur (fichiers dans le dossier `tests/`).
+
+---
+
+# 📦 Fonctionnalités implémentées
+
+✔ CRUD complet pour toutes les entités
+✔ Gestion des utilisateurs
+✔ Gestion des livres
+✔ Gestion des emprunts
+✔ Un emprunt peut contenir plusieurs livres
+✔ Un livre peut être emprunté plusieurs fois
+✔ Authentification JWT
+✔ Endpoints protégés (POST / PUT / DELETE)
+✔ Documentation Swagger complète
+✔ Pagination des résultats
+✔ Filtrage et recherche via query parameters
+✔ Gestion des erreurs HTTP (400, 401, 404, 409, 500)
+
+---
+
+# 🗂 Structure du projet
+
+L’API utilise désormais une **approche par services, interfaces et endpoints minimal APIs**, au lieu d’exposer directement des controllers.
+
+```
+Endpoints/
+    UsersEndpoints/
+        UsersEndPoints.cs       -> définition des routes /api/users
+
+Dtos/
+    users/
+        UserDto.cs
+        CreateUserDto.cs
+        UpdateUserDto.cs
+    borrowings/
+        CreateBorrowingDto.cs   -> (Nouveau) Contrat pour la création
+        BorrowingResponseDto.cs -> (Nouveau) Format de réponse de l'emprunt
+
+Models/
+    User.cs
+    Book.cs
+    Borrowing.cs
+
+services/
+    usersServices/
+        IUserService.cs         -> interface du service utilisateur
+        UserService.cs          -> implémentation de la logique métier User
+
+Data/
+    AppDbContext.cs
+
+Program.cs                     -> enregistrement des services + mapping des endpoints
+```
+
+Les endpoints HTTP sont regroupés dans le dossier `Endpoints`, la logique métier est portée par les **services** (interfaces + implémentations), et les **DTOs** servent de contrat d’échange entre l’API et les clients.
+
+---
+
+# 🧩 Relations des données
+
+## 🗄 Diagramme de la base de données (ERD)
+
+```mermaid
+erDiagram
+
+USER ||--o{ BORROWING : makes
+BORROWING ||--o{ BORROWINGBOOK : contains
+BOOK ||--o{ BORROWINGBOOK : included_in
+
+USER {
+    int Id
+    string FirstName
+    string LastName
+    string Email
+    string Password
+}
+
+BOOK {
+    int Id
+    string Title
+    string Author
+    string ISBN
+    int Quantity
+}
+
+BORROWING {
+    int Id
+    string BorrowCode
+    datetime BorrowDate
+    int UserId
+}
+
+BORROWINGBOOK {
+    int Id
+    int BorrowingId
+    int BookId
+    datetime ReturnDate
+}
+```
+
+### Explication des relations
+
+* **User → Borrowing**
+
+  * Un utilisateur peut effectuer plusieurs emprunts.
+
+* **Borrowing → BorrowingBook**
+
+  * Un emprunt peut contenir plusieurs livres.
+
+* **Book → BorrowingBook**
+
+  * Un livre peut être emprunté plusieurs fois.
+
+* **BorrowingBook**
+
+  * Table intermédiaire qui permet de gérer la relation **many-to-many** entre Borrowing et Book.
+  * Elle contient également la **date de retour de chaque livre**.
+
+```
+User
+ │
+ │ 1
+ │
+ └─────< Borrowing >─────< BorrowingBooks >───── Book
+            │
+            │
+       BorrowCode
+       BorrowDate
+```
+
+* Un **User** peut faire plusieurs **Borrowings**
+* Un **Borrowing** peut contenir plusieurs **Books**
+* Un **Book** peut apparaître dans plusieurs **Borrowings**
+
+---
+
+# ⚠️ Fonctionnalités non complétées
+
+* Interface utilisateur (frontend)
+* Gestion avancée des rôles
+* Dashboard statistique des emprunts
+
+---
+
+# 📄 Bonnes pratiques appliquées
+
+✔ Utilisation de **DTOs pour les requêtes et réponses**
+✔ Les entités EF Core ne sont jamais exposées directement
+✔ Retour de **ActionResult<T> pour contrôler les codes HTTP**
+✔ Utilisation de **CreatedAtAction() pour les ressources créées**
+✔ Swagger configuré avec bouton **Authorize pour JWT**
+
+---
+
+# 🎓 Contexte académique
+
+Ce projet a été réalisé dans le cadre d’un exercice visant à :
+
+* concevoir une **API REST complète**
+* documenter une API avec **Swagger**
+* sécuriser les endpoints avec **JWT**
+* connecter une application à une **base de données via Entity Framework Core**
+* appliquer les **bonnes pratiques de développement API**
+
+---
+
+# 🔗 Dépôt GitHub
+
+Repository :
+
+```
+https://github.com/LeFab70/apiProjet2
+```
+Dans le cadre d’un projet académique.
+Certaines parties du développement ont été **assistées par l’intelligence artificielle (GitHub Copilot)**.
+---
+# 👨‍💻 Répartition des tâches
+
+Le projet a été réalisé en équipe de trois développeurs. Chaque membre était responsable d’une partie spécifique de l’API afin de répartir efficacement le travail.
+
+## Fabrice
+
+Responsable setup global du projet, doc swagger,model et schema de la migration, fichier readme de l’authentification et de la gestion des utilisateurs.
+
+Tâches réalisées :
+
+* **Mise à jour du README** (lancement, chaînes de connexion, Swagger, JWT, exemples HTTP)
+* **Documentation Swagger / OpenAPI** : schéma **Bearer JWT** dans le document OpenAPI, résumés et descriptions sur les routes (accueil, authentification, utilisateurs, livres, emprunts), types de réponses (`Produces`) pour Swagger UI
+* **Setup du projet** : restauration des packages, configuration `appsettings.json` / JWT, profil de lancement **http** (port 5045)
+* **Modèle de données, `DbContext`, migrations EF Core** : modèle **User** (et contribution à la cohérence de la base avec le reste de l’équipe), contexte `ApiBorrowingContext`, migrations et chaîne **`DefaultConnection`**
+* Implémentation de l’authentification **JWT**
+* Création des endpoints :
+
+  * Login (`POST /api/login`)
+  * Inscription utilisateur (`POST /api/users`, anonyme)
+  * CRUD lecture / mise à jour / suppression sur `/api/users` (selon routes)
+* Sécurisation des endpoints avec **JWT**
+* Configuration **Swagger UI** avec **Authorize** pour le Bearer token
+
+---
+
+## Kayleb
+
+Responsable de la gestion des livres.
+
+Tâches réalisées :
+
+* Création du **Book Model**
+* Implémentation du **BooksController**
+* CRUD complet des livres :
+
+  * Ajouter un livre
+  * Modifier un livre
+  * Supprimer un livre
+  * Consulter les livres
+* Pagination et filtrage des livres
+* Validation des données
+
+---
+
+## Perez
+
+Responsable de la gestion des emprunts.
+
+Tâches réalisées :
+
+* Création du **Borrowing Model**
+* Gestion du **BorrowCode**
+* Implémentation du **BorrowingsController**
+* Gestion des relations :
+
+  * un emprunt peut contenir plusieurs livres
+  * un livre peut être emprunté plusieurs fois
+* Gestion des **dates d’emprunt et de retour**
+* Implémentation de la logique métier des emprunts
+
+---
+
+## Travail collaboratif
+
+Les éléments suivants ont été réalisés en collaboration :
+
+* Conception de la **base de données**
+* Mise en place de **Entity Framework Core**
+* Création des **DTOs**
+* Tests de l’API via **Swagger**
+* Gestion des erreurs HTTP
+* Revue du code et intégration GitHub
+
+---
+
+Tout le code a été **validé, testé et adapté par les membres de l’équipe**.
